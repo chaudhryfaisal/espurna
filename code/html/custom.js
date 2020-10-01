@@ -1085,6 +1085,17 @@ function addSchedule(values) {
 // Relays
 // -----------------------------------------------------------------------------
 
+function updateSwitchNames(data) {
+    setTimeout(() => {
+    for (var sw of data) {
+        label = $("#relays > div:nth-child(" + sw.id + ") > label")
+        if (label) {
+            label.html(sw.name)
+        }
+    }
+    }, 500);
+}
+
 function initRelays(data) {
 
     var current = $("#relays > div").length;
@@ -1192,6 +1203,7 @@ function initRelayConfig(data) {
 // -----------------------------------------------------------------------------
 
 <!-- removeIf(!sensor)-->
+
 function initMagnitudes(data) {
 
     // check if already initialized (each magnitude is inside div.pure-g)
@@ -1841,6 +1853,11 @@ function processData(data) {
                 MagnitudePrefixTypes[prefix] = type;
                 moduleVisible(prefix);
             }
+            return;
+        }
+
+        if ("switchNames" === key) {
+            updateSwitchNames(value);
             return;
         }
 
